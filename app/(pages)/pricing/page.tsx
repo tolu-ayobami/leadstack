@@ -72,7 +72,7 @@ const Page = () => {
                 <div className="max-w-7xl px-4 mx-auto">
 
                     <MotionItem variants={fadeUpVariants} className="text-center mb-10">
-                        <h1 className="  leading-[70px] md:leading-[32px] font-noto text-lg sm:text-xl md:text-2xl font-semibold text-[#0D1227]">
+                        <h1 className="md:leading-[32px] font-noto text-lg sm:text-xl md:text-2xl font-semibold text-[#0D1227]">
                             Enjoy our cutting-edge HR solution by choosing a flexible plan
                         </h1>
 

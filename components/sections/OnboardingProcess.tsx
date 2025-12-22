@@ -1,3 +1,4 @@
+// OnboardingProcess Component
 import React from 'react'
 import Image from 'next/image'
 import { fadeInRightVariants, fadeUpVariants, scalePopVariants } from "@/utils/Variants";
@@ -7,36 +8,39 @@ import { MotionItem } from '../animations/MotionItems';
 export const OnboardingProcess = () => {
     return (
         <div className='bg-[#EBF8FE]'>
-
-            <div className="w-full pt-12 pb-16 md:pb-20  overflow-hidden">
-
-                <MotionItem variants={scalePopVariants}  className="w-full max-w-xl lg:max-w-2xl text-center flex justify-center gap-2 items-center mx-auto flex-col px-4">
-                    <h1 className="font-noto font-semibold text-xl md:text-3xl lg:text-4xl">
+            <div className="w-full py-12 sm:py-16 lg:py-20 overflow-hidden">
+                {/* Header Section */}
+                <MotionItem 
+                    variants={scalePopVariants}  
+                    className="w-full max-w-7xl mx-auto text-center flex justify-center gap-3 sm:gap-4 items-center flex-col px-4 sm:px-6 lg:px-8"
+                >
+                    <h1 className="font-noto font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl">
                         Platform with seamless onboarding process
                     </h1>
-                    <p className="text-sm md:text-base font-noto text-[#535768] mt-2">
+                    <p className="text-sm sm:text-base font-noto text-[#535768] mt-2 max-w-2xl">
                         With our easy to use management solution, onboarding of staff and other
                         team members is as seamless as possible.
                     </p>
                 </MotionItem>
 
-
-                <div className="mt-12 md:mt-16 lg:mt-20 container mx-auto w-[88%]">
-                    <div className=" grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-20 items-center">
-                        <MotionItem variants={scalePopVariants} >
-                            <div className="flex-1 relative flex items-center justify-center order-1 lg:order-2">
-                                <div className="relative w-full aspect-[6/5] md:aspect-[10/9]">
-
+                {/* Content Section */}
+                <div className="mt-12 sm:mt-16 lg:mt-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 xl:gap-20 items-center">
+                        
+                        {/* Left Side - Onboarding Image */}
+                        <MotionItem variants={scalePopVariants}>
+                            <div className="flex-1 relative flex items-center justify-center order-2 lg:order-1">
+                                <div className="relative w-full aspect-[6/5] sm:aspect-[10/9]">
                                     <div className="relative w-full h-full">
                                         <Image
                                             src="/images/onboarding.svg"
                                             alt="onboarding"
                                             fill
-                                            className="object-cover w-full"
+                                            className="object-contain w-full"
                                         />
                                     </div>
 
-                                    <div className="absolute w-[40%] md:w-[50%] bottom-[17%] right-[20%] md:right-[10%]">
+                                    <div className="absolute w-[40%] sm:w-[45%] md:w-[50%] bottom-[17%] right-[15%] sm:right-[12%] md:right-[10%]">
                                         <Image
                                             src="/images/onboarding1.svg"
                                             alt="dashboard card"
@@ -51,38 +55,35 @@ export const OnboardingProcess = () => {
                                         alt="onboarding3"
                                         width={500}
                                         height={500}
-                                        className="absolute w-[45%] md:w-[50%] h-auto top-[28%] right-[-80px] lg:right-[-300px] lg:left-[90%] z-50 transform -translate-x-1/2 shadow-lg"
+                                        className="absolute w-[40%] sm:w-[45%] md:w-[50%] h-auto top-[28%] right-[-60px] sm:right-[-80px] lg:right-[-100px] xl:right-[-150px] z-50 transform -translate-x-1/2 shadow-lg"
                                     />
-
 
                                     <Image
                                         src="/images/onboarding3.svg"
                                         alt="onboarding3"
                                         width={500}
                                         height={500}
-                                        className="absolute w-[45%] md:w-[50%] h-auto top-[-5%] right-[-80px] lg:right-[-150px] transform -translate-x-1/2"
+                                        className="absolute w-[40%] sm:w-[45%] md:w-[50%] h-auto top-[-5%] right-[-60px] sm:right-[-80px] lg:right-[-100px] xl:right-[-150px] transform -translate-x-1/2"
                                     />
-
 
                                     <Image
                                         src="/images/onboarding3.svg"
                                         alt="onboarding3"
                                         width={500}
                                         height={500}
-                                        className="absolute w-[45%] md:w-[50%] h-auto md:top-[8%] top-[13%] right-[-90px] lg:right-[-200px] transform -translate-x-1/2"
+                                        className="absolute w-[40%] sm:w-[45%] md:w-[50%] h-auto top-[13%] sm:top-[10%] md:top-[8%] right-[-70px] sm:right-[-90px] lg:right-[-120px] xl:right-[-200px] transform -translate-x-1/2"
                                     />
-
                                 </div>
                             </div>
                         </MotionItem>
 
-                        <MotionItem variants={scalePopVariants} >
-                            <div className="flex-1 w-full relative flex flex-col items-center m-auto justify-center order-1 lg:order-2 ">
-
+                        {/* Right Side - Team Member Image */}
+                        <MotionItem variants={scalePopVariants}>
+                            <div className="flex-1 w-full relative flex flex-col items-center justify-center order-1 lg:order-2">
                                 <div className="absolute inset-x-0 bottom-0 -z-10">
                                     <svg
                                         viewBox="0 0 1440 320"
-                                        className="w-full h-48"
+                                        className="w-full h-32 sm:h-40 md:h-48"
                                         preserveAspectRatio="none"
                                     >
                                         <path
@@ -94,12 +95,9 @@ export const OnboardingProcess = () => {
                                     </svg>
                                 </div>
 
-
-                                <div className="relative flex justify-center mb-6 md:mb-8">
-
-
+                                <div className="relative flex justify-center mb-6 sm:mb-8">
                                     <div
-                                        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:w-[250px] lg:h-[250px] w-[200px] h-[200px] rounded-full bg-[#FFB240] z-0 animate-wave"
+                                        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180px] h-[180px] sm:w-[200px] sm:h-[200px] lg:w-[250px] lg:h-[250px] rounded-full bg-[#FFB240] z-0 animate-wave"
                                     />
 
                                     <Image
@@ -107,59 +105,55 @@ export const OnboardingProcess = () => {
                                         alt="team member"
                                         width={400}
                                         height={400}
-                                        className="lg:w-[800px] w-[600px] h-auto relative z-10"
+                                        className="w-[500px] sm:w-[600px] lg:w-[800px] h-auto relative z-10"
                                     />
-
                                 </div>
 
-                                <div className="absolute bottom-[-20px] w-[90%]  z-20">
+                                <div className="absolute bottom-[-15px] sm:bottom-[-20px] w-[90%] sm:w-[85%] z-20">
                                     <Image
                                         src="/images/onboarding2.svg"
                                         alt="onboarding stats"
                                         width={500}
                                         height={500}
-                                        className="w-full  h-auto"
+                                        className="w-full h-auto"
                                     />
                                 </div>
 
                                 <style jsx>{`
-                           @keyframes wave {
-                             0%, 100% {
-                               transform: translate(-50%, -50%) scale(1);
-                             }
-                             50% {
-                               transform: translate(-50%, -50%) scale(1.1);
-                             }
-                           }
-                           
-                           @keyframes wave-bg {
-                             0% {
-                               transform: translateX(0);
-                             }
-                             50% {
-                               transform: translateX(-25px);
-                             }
-                             100% {
-                               transform: translateX(0);
-                             }
-                           }
-                           
-                           .animate-wave {
-                             animation: wave 3s ease-in-out infinite;
-                           }
-                           
-                           .animate-wave-bg {
-                             animation: wave-bg 8s ease-in-out infinite;
-                           }
-                         `}</style>
+                                   @keyframes wave {
+                                     0%, 100% {
+                                       transform: translate(-50%, -50%) scale(1);
+                                     }
+                                     50% {
+                                       transform: translate(-50%, -50%) scale(1.1);
+                                     }
+                                   }
+                                   
+                                   @keyframes wave-bg {
+                                     0% {
+                                       transform: translateX(0);
+                                     }
+                                     50% {
+                                       transform: translateX(-25px);
+                                     }
+                                     100% {
+                                       transform: translateX(0);
+                                     }
+                                   }
+                                   
+                                   .animate-wave {
+                                     animation: wave 3s ease-in-out infinite;
+                                   }
+                                   
+                                   .animate-wave-bg {
+                                     animation: wave-bg 8s ease-in-out infinite;
+                                   }
+                                 `}</style>
                             </div>
                         </MotionItem>
-
                     </div>
                 </div>
             </div>
-
-
         </div>
     )
 }

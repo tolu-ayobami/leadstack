@@ -22,11 +22,19 @@ export default function Header() {
     const dropdownRef = useRef<HTMLDivElement>(null);
     useOutsideClick(dropdownRef, () => setOpenDropdown(null));
     const [scrolled, setScrolled] = useState(false);
+    const [hideHeader, setHideHeader] = useState(false);
 
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
+            const heroSectionHeight = window.innerHeight; // Adjust this value to match your hero section height
+            const scrollPosition = window.scrollY;
+
+            // Add backdrop blur when scrolled
+            setScrolled(scrollPosition > 50);
+
+            // Hide header after passing hero section
+            setHideHeader(scrollPosition > heroSectionHeight);
         };
 
         window.addEventListener("scroll", handleScroll);
@@ -34,16 +42,27 @@ export default function Header() {
     }, [])
 
     return (
-        <header className={` max-sm:pt-4 fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/85 backdrop-blur-sm " : "bg-white"
-            }`}>
+        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+            scrolled ? "bg-white/85 backdrop-blur-sm shadow-md" : "bg-white"
+        } ${
+            hideHeader ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"
+        }`}>
 
-            <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-6 py-3 sm:py-4">
 
-                <Link href="/" className="text-xl font-bold">
-                    <Image src="/images/Logo.png" alt="logo" height={200} width={200} className="max-sm:w-[150px] max-sm:h-auto" />
+                {/* Logo */}
+                <Link href="/" className="flex-shrink-0">
+                    <Image 
+                        src="/images/Logo.png" 
+                        alt="logo" 
+                        height={200} 
+                        width={200} 
+                        className="w-[120px] sm:w-[150px] md:w-[180px] lg:w-[200px] h-auto" 
+                    />
                 </Link>
 
-                <nav className="hidden lg:flex items-center gap-8">
+                {/* Desktop Navigation */}
+                <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
                     {navItems.map((item) => (
                         <div
                             key={item.label}
@@ -53,14 +72,21 @@ export default function Header() {
                         >
                             {item.dropdown ? (
                                 <>
-                                    <button className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-blue-600">
-                                        <Link href={item.href} className={`${isActive(item.href)
-                                            ? "text-[#1D8EE6] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-[#1D8EE6] "
-                                            : "text-gray-700 hover:text-[#1D8EE6]"
-                                            }`}>{item.label}</Link>
+                                    <button className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+                                        <Link 
+                                            href={item.href} 
+                                            className={`relative ${
+                                                isActive(item.href)
+                                                    ? "text-[#1D8EE6] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-[#1D8EE6]"
+                                                    : "text-gray-700 hover:text-[#1D8EE6]"
+                                            }`}
+                                        >
+                                            {item.label}
+                                        </Link>
                                         <FiChevronDown
-                                            className={`transition-transform ${openDropdown === item.label ? "rotate-180" : ""
-                                                }`}
+                                            className={`transition-transform duration-200 ${
+                                                openDropdown === item.label ? "rotate-180" : ""
+                                            }`}
                                         />
                                     </button>
 
@@ -72,7 +98,7 @@ export default function Header() {
                                                         <li key={sub.label}>
                                                             <Link
                                                                 href={sub.href}
-                                                                className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600"
+                                                                className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition-colors"
                                                                 onClick={() => setOpenDropdown(null)}
                                                             >
                                                                 {sub.label}
@@ -87,52 +113,52 @@ export default function Header() {
                             ) : (
                                 <Link
                                     href={item.href!}
-                                    className={`relative text-sm font-medium transition-colors ${isActive(item.href)
-                                        ? "text-[#1D8EE6] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-[#1D8EE6] "
-                                        : "text-gray-700 hover:text-[#1D8EE6]"
-                                        }`}
+                                    className={`relative text-sm font-medium transition-colors ${
+                                        isActive(item.href)
+                                            ? "text-[#1D8EE6] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-[#1D8EE6]"
+                                            : "text-gray-700 hover:text-[#1D8EE6]"
+                                    }`}
                                 >
                                     {item.label}
                                 </Link>
-
-
                             )}
                         </div>
                     ))}
-
                 </nav>
 
-                <div className="flex gap-3 items-center">
+                {/* Desktop Auth Buttons */}
+                <div className="hidden lg:flex gap-2 xl:gap-3 items-center flex-shrink-0">
                     <Link
                         href="https://leadhr.app/login"
-                        className="rounded-md hidden lg:flex  bg-[#1D8EE6] px-4 py-2 text-sm font-medium text-white "
+                        className="rounded-md bg-[#1D8EE6] px-3 xl:px-4 py-2 text-sm font-medium text-white hover:bg-[#1570b8] transition-colors"
                     >
                         Login
                     </Link>
 
                     <Link
                         href="https://leadhr.app/register"
-                        className="rounded-md hidden lg:flex  bg-white border border-[#1D8EE6]  px-4 py-2 text-sm font-medium text-[#1D8EE6] "
+                        className="rounded-md bg-white border border-[#1D8EE6] px-3 xl:px-4 py-2 text-sm font-medium text-[#1D8EE6] hover:bg-[#1D8EE6] hover:text-white transition-colors whitespace-nowrap"
                     >
                         Create Account
                     </Link>
                 </div>
 
-
+                {/* Mobile Menu Button */}
                 <button
                     onClick={() => setMobileOpen(!mobileOpen)}
-                    className="lg:hidden text-2xl"
+                    className="lg:hidden text-2xl text-gray-700 hover:text-[#1D8EE6] transition-colors"
+                    aria-label="Toggle menu"
                 >
                     {mobileOpen ? <HiX /> : <HiOutlineMenuAlt3 />}
                 </button>
             </div>
 
-            {/* Mobile Menu (Click-based) */}
+            {/* Mobile Menu */}
             {mobileOpen && (
-                <div className="lg:hidden border-t bg-white px-4 py-4">
-                    <nav className="flex flex-col gap-4">
+                <div className="lg:hidden border-t bg-white">
+                    <nav className="flex flex-col px-4 sm:px-6 py-4 max-h-[calc(100vh-80px)] overflow-y-auto">
                         {navItems.map((item) => (
-                            <div key={item.label}>
+                            <div key={item.label} className="border-b border-gray-100 last:border-0">
                                 {item.dropdown ? (
                                     <>
                                         <button
@@ -140,28 +166,38 @@ export default function Header() {
                                                 setOpenDropdown(
                                                     openDropdown === item.label ? null : item.label
                                                 )
-
                                             }
-
-                                            className="flex w-full items-center justify-between text-sm font-medium text-gray-700"
-                                        > <Link href={item.href} onClick={() => setMobileOpen(false)} className={`${isActive(item.href)
-                                            ? "text-[#1D8EE6] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-[#1D8EE6] "
-                                            : "text-gray-700 hover:text-[#1D8EE6]"
-                                            }`}>{item.label}</Link>
+                                            className="flex w-full items-center justify-between py-3 text-sm font-medium text-gray-700"
+                                        >
+                                            <Link 
+                                                href={item.href} 
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setMobileOpen(false);
+                                                }}
+                                                className={`${
+                                                    isActive(item.href)
+                                                        ? "text-[#1D8EE6]"
+                                                        : "text-gray-700 hover:text-[#1D8EE6]"
+                                                }`}
+                                            >
+                                                {item.label}
+                                            </Link>
 
                                             <FiChevronDown
-                                                className={`transition-transform ${openDropdown === item.label ? "rotate-180" : ""
-                                                    }`}
+                                                className={`transition-transform duration-200 ${
+                                                    openDropdown === item.label ? "rotate-180" : ""
+                                                }`}
                                             />
                                         </button>
 
                                         {openDropdown === item.label && (
-                                            <div className="mt-4 ml-2 flex flex-col gap-4">
+                                            <div className="flex flex-col gap-2 pb-3 pl-4">
                                                 {item.dropdown.map((sub) => (
                                                     <Link
                                                         key={sub.label}
                                                         href={sub.href}
-                                                        className="text-sm hover:bg-gray-100 py-3 px-3 text-gray-600"
+                                                        className="text-sm hover:bg-gray-100 py-2 px-3 rounded text-gray-600 hover:text-[#1D8EE6] transition-colors"
                                                         onClick={() => {
                                                             setOpenDropdown(null);
                                                             setMobileOpen(false);
@@ -176,7 +212,11 @@ export default function Header() {
                                 ) : (
                                     <Link
                                         href={item.href!}
-                                        className="text-sm font-medium text-gray-700"
+                                        className={`block py-3 text-sm font-medium ${
+                                            isActive(item.href)
+                                                ? "text-[#1D8EE6]"
+                                                : "text-gray-700 hover:text-[#1D8EE6]"
+                                        } transition-colors`}
                                         onClick={() => setMobileOpen(false)}
                                     >
                                         {item.label}
@@ -185,17 +225,20 @@ export default function Header() {
                             </div>
                         ))}
 
-                        <div className="flex w-full flex-col gap-3 items-center">
+                        {/* Mobile Auth Buttons */}
+                        <div className="flex flex-col gap-3 mt-6 pt-4 border-t border-gray-100">
                             <Link
-                                href="/"
-                                className="rounded-md bg-white w-[60%] text-center border border-[#1D8EE6]  px-4 py-2 text-sm font-medium text-[#1D8EE6] "
+                                href="https://leadhr.app/register"
+                                className="rounded-md bg-white text-center border border-[#1D8EE6] px-4 py-2.5 text-sm font-medium text-[#1D8EE6] hover:bg-[#1D8EE6] hover:text-white transition-colors"
+                                onClick={() => setMobileOpen(false)}
                             >
-                                Signup
+                                Create Account
                             </Link>
 
                             <Link
-                                href="/"
-                                className="rounded-md w-[60%] text-center bg-[#1D8EE6] px-4 py-2 text-sm font-medium text-white "
+                                href="https://leadhr.app/login"
+                                className="rounded-md text-center bg-[#1D8EE6] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#1570b8] transition-colors"
+                                onClick={() => setMobileOpen(false)}
                             >
                                 Login
                             </Link>

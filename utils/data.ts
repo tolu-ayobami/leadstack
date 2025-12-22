@@ -50,10 +50,13 @@ export type jobs = {
 
 };
 
-
 //jobs link data
 
 export const job: jobs[] = [
+   {
+    label: "Home",
+    href: "/jobs", 
+  },
   {
     label: "Jobs Pool",
     href: "/jobs/job-pool", 

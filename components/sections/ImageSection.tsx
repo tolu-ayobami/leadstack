@@ -64,7 +64,7 @@ const ImageSection = () => {
             </MotionItem>
           </div>
 
-          <MotionItem variants={fadeUpVariants}  className="flex flex-wrap gap-4 justify-center lg:hidden">
+          <MotionItem variants={fadeUpVariants}  className="flex flex-wrap gap-4 pb-3 justify-center lg:hidden">
             {images.map((img) => (
               <div
                 key={img.id}
@@ -80,6 +80,7 @@ const ImageSection = () => {
               </div>
             ))}
           </MotionItem>
+
           <MotionItem variants={scalePopVariants} >
             <div className="flex-1 max-w-3xl flex flex-col gap-6 text-center lg:text-left">
               <h1 className="font-noto xl:text-5xl text-xl lg:text-4xl font-semibold leading-[32px]">

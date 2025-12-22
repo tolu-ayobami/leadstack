@@ -76,7 +76,7 @@ const Page = () => {
                 {Jobs.map((feature, index) => (
                     <MotionItem variants={scalePopVariants}
                         key={index}
-                        className={`flex pt-20 flex-col lg:flex-row w-[90%] lg:px-6 mx-auto items-center gap-10 ${index % 2 !== 0 ? "lg:flex-row-reverse l:gap-40" : ""
+                        className={`flex pt-10 flex-col lg:flex-row w-[90%] lg:px-6 mx-auto items-center gap-10 ${index % 2 !== 0 ? "lg:flex-row-reverse l:gap-40" : ""
                             }`} >
                         <div className='flex-1'>
                             <Image

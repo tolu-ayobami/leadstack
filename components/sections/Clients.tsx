@@ -65,19 +65,19 @@ export const Client = () => {
                             spaceBetween: 24
                         },
                     }}
-                    className="!pb-16 md:!pb-20  w-[88%] "
+                    className="!pb-16 md:!pb-20  w-[90%] "
                 >
                     {client.map((job) => (
                         <SwiperSlide key={job.id}>
                             <div className="flex w-fit justify-center gap-8 bg-white p-4  rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 h-full">
                                 <div className='flex gap-2'>
-                                    <Image src={job.picture} alt={job.name} width={170} height={170} className='object-cover' />
+                                    <Image src={job.picture} alt={job.name} width={150} height={150} className='object-cover' />
                                     <div className=' flex gap-2 flex-col'>
-                                        <div className='flex flex-col pb-2'>
-                                           <Reveal><h1 className='font-noto text-lg'>Jame Palmer</h1> 
+                                        <div className='flex flex-col pb-3'>
+                                           <Reveal><h1 className='font-noto text-xl'>Jame Palmer</h1> 
                                            <p className='text-[#535768] text-md'>Leadway Plc</p></Reveal>
                                         </div>
-                                      <Reveal><p className='text-[#7C8091] text-sm'>LeadStack HR Solution has revolutionized our hiring process!</p></Reveal>
+                                      <Reveal><p className='text-[#7C8091] text-base'>LeadStack HR Solution has revolutionized our hiring process!</p></Reveal>
                                     </div>
                                 </div>
 

@@ -13,7 +13,7 @@ import Preloader from "@/components/Preloader";
 export default function Home() {
   return (
 
-    <div className=" max-sm:pt-28 min-h-screen">
+    <div className="overflow-x-hidden max-sm:pt-28 min-h-screen">
       <HeroSection />
 
       <OnboardingProcess />
