@@ -27,16 +27,13 @@ export default function Header() {
 
     useEffect(() => {
         const handleScroll = () => {
-            const heroSectionHeight = window.innerHeight; // Adjust this value to match your hero section height
+            const heroSectionHeight = window.innerHeight;
             const scrollPosition = window.scrollY;
 
-            // Add backdrop blur when scrolled
             setScrolled(scrollPosition > 50);
-
-            // Hide header after passing hero section
             setHideHeader(scrollPosition > heroSectionHeight);
         };
-
+        
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, [])
@@ -47,8 +44,8 @@ export default function Header() {
         } ${
             hideHeader ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"
         }`}>
-
-            <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-6 py-3 sm:py-4">
+            
+            <div className="container mx-auto flex items-center justify-between px-4  py-3 sm:py-4">
 
                 {/* Logo */}
                 <Link href="/" className="flex-shrink-0">
@@ -156,7 +153,7 @@ export default function Header() {
             {/* Mobile Menu */}
             {mobileOpen && (
                 <div className="lg:hidden border-t bg-white">
-                    <nav className="flex flex-col px-4 sm:px-6 py-4 max-h-[calc(100vh-80px)] overflow-y-auto">
+                    <nav className="container mx-auto flex flex-col px-4 sm:px-6 py-4 max-h-[calc(100vh-80px)] overflow-y-auto">
                         {navItems.map((item) => (
                             <div key={item.label} className="border-b border-gray-100 last:border-0">
                                 {item.dropdown ? (

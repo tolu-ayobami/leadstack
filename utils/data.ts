@@ -24,7 +24,7 @@ export const navItems: NavItem[] = [
     label: "Job Pool",
     href: "/jobs", 
     dropdown: [
-      { label: "Find Jobs", href: "/jobs" },
+      { label: "Find Jobs", href: "/jobs/job-pool" },
       { label: "Post a Job", href: "/jobs/post" },
     ],
   },

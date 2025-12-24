@@ -5,7 +5,7 @@ import { MotionItem } from '@/components/animations/MotionItems';
 
 export default function FaqPage() {
   return (
-    <section className=" pt-40 bg-[#FAFAFC] w-full">
+    <section className=" pt-40 bg-[#FAFAFC]">
       <div className="mx-auto ">
         <MotionItem variants={fadeInRightVariants} className="mb-12 lg:py-14 py-6 max-w-md flex flex-col justify-center m-auto text-center animate-pulse">
           <h1 className="text-3xl font-bold sm:text-5xl

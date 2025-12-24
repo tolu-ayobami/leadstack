@@ -96,10 +96,10 @@ export const HeroSection = () => {
             </div>
 
             
-            <div className="container mx-auto px-4 pb-12 md:pb-16 lg:pb-20 relative z-10">
+            {/* Updated container padding to match header */}
+            <div className="container mx-auto px-4  pb-12 md:pb-16 lg:pb-20 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center justify-items-center lg:justify-items-start">
 
-                   
                     <motion.div
                         ref={contentRef}
                         variants={containerVariants}
@@ -173,7 +173,7 @@ export const HeroSection = () => {
                         
                         <motion.div
                             variants={fadeUpVariants}
-                            className="mt-6 md:mt-8 flex gap-3 md:gap-4 justify-center lg:justify-start items-center"
+                            className="mt-6 md:mt-8 flex gap-3 md:gap-4 justify-center flex-wrap lg:justify-start items-center"
                         >
                             <motion.button
                                 whileHover={buttonVariants.hover}

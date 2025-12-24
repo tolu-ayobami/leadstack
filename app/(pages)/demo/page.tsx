@@ -5,10 +5,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import LogoCarousel from "@/components/sections/PartnersCarousel";
-import Howitorks from "@/components/sections/Howitorks";
 import { countries } from "@/utils/CountriesData";
 import { toast } from "react-toastify";
-
+import { fadeInRightVariants } from "@/utils/Variants";
+import { Reveal } from '@/components/animations/Reavel';
+import { MotionItem } from '@/components/animations/MotionItems';
+import Link from "next/link";
 
 const contactSchema = z.object({
     firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -18,8 +20,9 @@ const contactSchema = z.object({
     companyName: z.string().min(2, "Company name is required"),
     country: z.string().min(2, "Country is required"),
     companyAddress: z.string().min(5, "Address must be at least 5 characters"),
-    numberofEmployee: z.string().min(1, "Please select a request type"),
-    products: z.string().min(1, "Please select a date"),
+    numberofEmployee: z.string().min(1, "Please select number of employees"),
+    requestType: z.string().min(1, "Please select a product"),
+    howDidYouHear: z.string().min(1, "Please tell us how you heard about us"),
     consent: z.boolean().refine(val => val === true, {
         message: "You must agree before continuing"
     }),
@@ -39,7 +42,6 @@ const Page = () => {
     });
 
     const onSubmit = async (data: ContactFormData) => {
-
         const payload = {
             ...data,
             _subject: "New Demo Form Submission",
@@ -47,7 +49,7 @@ const Page = () => {
         };
 
         try {
-            const response = await fetch("https://formspree.io/f/mgowwgav", {
+            const response = await fetch("https://formspree.io/f/xykgowje", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -68,13 +70,10 @@ const Page = () => {
         }
     };
 
-
     return (
         <div>
-
-            <div className="pt-28 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-7xl lg:px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10">
-
+            <div className="pt-28">
+                <div className="container px-4 sm:px-6 lg:px-8 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10">
 
                     <div className="w-full lg:w-[30%] flex flex-col gap-3 lg:gap-4 text-center lg:text-left items-center lg:items-start">
                         <h1 className="font-semibold font-noto text-2xl sm:text-3xl md:text-4xl">
@@ -85,11 +84,10 @@ const Page = () => {
                         </p>
                     </div>
 
-
                     <div className="bg-white p-5 sm:p-6 md:p-8 rounded-xl shadow-md w-full lg:w-[70%]">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
 
-
+                            {/* First Name & Last Name */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 <div>
                                     <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -98,7 +96,7 @@ const Page = () => {
                                     <input
                                         id="firstName"
                                         {...register("firstName")}
-                                        className="border p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full"
+                                        className="border border-gray-300 p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full focus:border-[#1D8EE6] focus:ring-1 focus:ring-[#1D8EE6] transition-colors"
                                         placeholder="First Name"
                                     />
                                     {errors.firstName && (
@@ -113,7 +111,7 @@ const Page = () => {
                                     <input
                                         id="lastName"
                                         {...register("lastName")}
-                                        className="border p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full"
+                                        className="border border-gray-300 p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full focus:border-[#1D8EE6] focus:ring-1 focus:ring-[#1D8EE6] transition-colors"
                                         placeholder="Last Name"
                                     />
                                     {errors.lastName && (
@@ -122,17 +120,16 @@ const Page = () => {
                                 </div>
                             </div>
 
-
-
+                            {/* Company Name & Country */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 <div>
                                     <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-1">
-                                        Company’s name <span className="text-red-500">*</span>
+                                        Company's name <span className="text-red-500">*</span>
                                     </label>
                                     <input
                                         id="companyName"
                                         {...register("companyName")}
-                                        className="border p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full"
+                                        className="border border-gray-300 p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full focus:border-[#1D8EE6] focus:ring-1 focus:ring-[#1D8EE6] transition-colors"
                                         placeholder="Company Name"
                                     />
                                     {errors.companyName && (
@@ -147,7 +144,7 @@ const Page = () => {
                                     <select
                                         id="country"
                                         {...register("country")}
-                                        className="border p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full text-gray-600"
+                                        className="border border-gray-300 p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full text-gray-600 focus:border-[#1D8EE6] focus:ring-1 focus:ring-[#1D8EE6] transition-colors"
                                     >
                                         <option value="">Select Country</option>
                                         {countries.map((country) => (
@@ -162,18 +159,17 @@ const Page = () => {
                                 </div>
                             </div>
 
-
-
+                            {/* Email & Phone */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="companyEmail" className="block text-sm font-medium text-gray-700 mb-1">
                                         Company Email Address<span className="text-red-500">*</span>
                                     </label>
                                     <input
                                         id="companyEmail"
                                         type="email"
                                         {...register("companyEmail")}
-                                        className="border p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full"
+                                        className="border border-gray-300 p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full focus:border-[#1D8EE6] focus:ring-1 focus:ring-[#1D8EE6] transition-colors"
                                         placeholder="Email Address"
                                     />
                                     {errors.companyEmail && (
@@ -189,7 +185,7 @@ const Page = () => {
                                         id="phoneNumber"
                                         type="tel"
                                         {...register("phoneNumber")}
-                                        className="border p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full"
+                                        className="border border-gray-300 p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full focus:border-[#1D8EE6] focus:ring-1 focus:ring-[#1D8EE6] transition-colors"
                                         placeholder="Phone Number"
                                     />
                                     {errors.phoneNumber && (
@@ -198,97 +194,129 @@ const Page = () => {
                                 </div>
                             </div>
 
-
+                            {/* Company Address */}
                             <div>
-                                <label htmlFor="countryAddress" className="block text-sm font-medium text-gray-700 mb-1">
+                                <label htmlFor="companyAddress" className="block text-sm font-medium text-gray-700 mb-1">
                                     Company's Address <span className="text-red-500">*</span>
                                 </label>
                                 <input
-                                    id="countryAddress"
+                                    id="companyAddress"
                                     {...register("companyAddress")}
-                                    className="border p-3 sm:p-4 outline-none w-full rounded-lg text-sm sm:text-base"
-                                    placeholder="Country's Address"
+                                    className="border border-gray-300 p-3 sm:p-4 outline-none w-full rounded-lg text-sm sm:text-base focus:border-[#1D8EE6] focus:ring-1 focus:ring-[#1D8EE6] transition-colors"
+                                    placeholder="Company's Address"
                                 />
                                 {errors.companyAddress && (
                                     <p className="text-red-500 text-xs mt-1">{errors.companyAddress.message}</p>
                                 )}
                             </div>
 
-
+                            {/* Number of Employees & Request Type */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 <div>
-                                    <label htmlFor="requestType" className="block text-sm font-medium text-gray-700 mb-1">
-                                        Number of Employee  <span className="text-red-500">*</span>
+                                    <label htmlFor="numberofEmployee" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Number of Employee <span className="text-red-500">*</span>
                                     </label>
                                     <select
-                                        id="products"
-                                        {...register("products")}
-                                        className="border p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base text-gray-600 w-full"
+                                        id="numberofEmployee"
+                                        {...register("numberofEmployee")}
+                                        className="border border-gray-300 p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base text-gray-600 w-full focus:border-[#1D8EE6] focus:ring-1 focus:ring-[#1D8EE6] transition-colors"
                                     >
-                                        <option value="">Select Type</option>
-                                        <option value="general">1 - 20</option>
-                                        <option value="demo">21 - 50 </option>
-                                        <option value="support">51 - 100</option>
-                                        <option value="partnership">101 - 500</option>
-                                        <option value="partnership">More than 500</option>
+                                        <option value="">Select Range</option>
+                                        <option value="1-20">1 - 20</option>
+                                        <option value="21-50">21 - 50</option>
+                                        <option value="51-100">51 - 100</option>
+                                        <option value="101-500">101 - 500</option>
+                                        <option value="500+">More than 500</option>
                                     </select>
-                                    {errors.products && (
-                                        <p className="text-red-500 text-xs mt-1">{errors.products.message}</p>
+                                    {errors.numberofEmployee && (
+                                        <p className="text-red-500 text-xs mt-1">{errors.numberofEmployee.message}</p>
                                     )}
                                 </div>
 
                                 <div>
-                                    <label htmlFor="preferredDate" className="block text-sm font-medium text-gray-700 mb-1">
-                                        Product interested in <span className="text-red-500">*</span>
+                                    <label htmlFor="requestType" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Request Type <span className="text-red-500">*</span>
                                     </label>
-                                    <input
-                                        id="Products"
-                                        type="text"
-                                        placeholder="Enter product name"
-                                        {...register("products")}
-                                        className="border p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base w-full"
-                                    />
-                                    {errors.products && (
-                                        <p className="text-red-500 text-xs mt-1">{errors.products.message}</p>
+                                    <select
+                                        id="requestType"
+                                        {...register("requestType")}
+                                        className="border border-gray-300 p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base text-gray-600 w-full focus:border-[#1D8EE6] focus:ring-1 focus:ring-[#1D8EE6] transition-colors"
+                                    >
+                                        <option value="">Select Product</option>
+                                        <option value="attendance">Attendance</option>
+                                        <option value="performance">Performance Management</option>
+                                        <option value="payroll">Payroll Management</option>
+                                        <option value="finance">Finance Management</option>
+                                    </select>
+                                    {errors.requestType && (
+                                        <p className="text-red-500 text-xs mt-1">{errors.requestType.message}</p>
                                     )}
                                 </div>
                             </div>
 
-                            <div className="mt-4 flex items-start items-center gap-3">
-                                <input
-                                    type="checkbox"
-                                    id="consent"
-                                    {...register("consent")}
-                                    className="mt-1 h-6 w-6 cursor-pointer"
-                                    style={{
-                                        accentColor: "#1D8EE6",
-                                        borderRadius: "4px",
-                                    }}
-                                />
-
-                                <label
-                                    htmlFor="consent"
-                                    className="text-sm text-[#7C8091] font-poppins leading-tight cursor-pointer"
-                                >
-                                By clicking continue, you accept the <span className="text-[#1D8EE6]">Terms of Service </span> and   <span className="text-[#1D8EE6]">Privacy Policy  of Leadsatck</span>
+                            {/* How Did You Hear About Us - NEW FIELD */}
+                            <div>
+                                <label htmlFor="howDidYouHear" className="block text-sm font-medium text-gray-700 mb-1">
+                                    How did you hear about us? <span className="text-red-500">*</span>
                                 </label>
+                                <select
+                                    id="howDidYouHear"
+                                    {...register("howDidYouHear")}
+                                    className="border border-gray-300 p-3 sm:p-4 outline-none rounded-lg text-sm sm:text-base text-gray-600 w-full focus:border-[#1D8EE6] focus:ring-1 focus:ring-[#1D8EE6] transition-colors"
+                                >
+                                    <option value="">Select an option</option>
+                                    <option value="search-engine">Search Engine (Google, Bing, etc.)</option>
+                                    <option value="social-media">Social Media</option>
+                                    <option value="linkedin">LinkedIn</option>
+                                    <option value="twitter">Twitter/X</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="instagram">Instagram</option>
+                                    <option value="referral">Referral from a friend/colleague</option>
+                                    <option value="advertisement">Online Advertisement</option>
+                                    <option value="blog">Blog or Article</option>
+                                    <option value="event">Event or Conference</option>
+                                    <option value="partner">Partner/Reseller</option>
+                                    <option value="email">Email Campaign</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                {errors.howDidYouHear && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.howDidYouHear.message}</p>
+                                )}
                             </div>
 
-                            {errors.consent && (
-                                <span className="text-red-500 text-sm">{errors.consent.message}</span>
-                            )}
+                            {/* Consent Checkbox */}
+                            <div className="mt-4">
+                                <div className="flex items-start items-center gap-3">
+                                    <input
+                                        type="checkbox"
+                                        id="consent"
+                                        {...register("consent")}
+                                        className="mt-1 h-5 w-5 cursor-pointer rounded border-gray-300 text-[#1D8EE6]  accent-[#1D8EE6] "
+                                    />
+                                    <label
+                                        htmlFor="consent"
+                                        className="text-sm text-[#7C8091] font-poppins leading-tight cursor-pointer"
+                                    >
+                                        By clicking continue, you accept the{" "}
+                                       <Link href="https://leadstack.co/terms-of-use"> <span className="text-[#1D8EE6] hover:underline">Terms of Service</span> and{" "}</Link>
+                                        <Link href="https://leadstack.co/privacy-policy"><span className="text-[#1D8EE6] hover:underline">Privacy Policy of Leadstack</span></Link>
+                                    </label>
+                                </div>
+                                {errors.consent && (
+                                    <p className="text-red-500 text-xs mt-1">{errors.consent.message}</p>
+                                )}
+                            </div>
 
-
+                            {/* Submit Button */}
                             <div className="flex justify-end pt-2">
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="w-full sm:w-auto sm:min-w-[160px] bg-[#1D8EE6] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#1678c2] transition text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="w-full sm:w-auto sm:min-w-[160px] bg-[#1D8EE6] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#1678c2] transition text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                                 >
                                     {isSubmitting ? "Submitting..." : "Submit"}
                                 </button>
                             </div>
-
                         </form>
                     </div>
                 </div>

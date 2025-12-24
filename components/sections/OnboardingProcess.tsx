@@ -8,11 +8,11 @@ import { MotionItem } from '../animations/MotionItems';
 export const OnboardingProcess = () => {
     return (
         <div className='bg-[#EBF8FE]'>
-            <div className="w-full py-12 sm:py-16 lg:py-20 overflow-hidden">
-                {/* Header Section */}
+            <div className="py-12 sm:py-16 lg:py-20 overflow-hidden">
+                {/* Header Section - Full width with padding */}
                 <MotionItem 
                     variants={scalePopVariants}  
-                    className="w-full max-w-7xl mx-auto text-center flex justify-center gap-3 sm:gap-4 items-center flex-col px-4 sm:px-6 lg:px-8"
+                    className="w-full text-center flex justify-center gap-3 sm:gap-4 items-center flex-col px-4 sm:px-6 lg:px-8"
                 >
                     <h1 className="font-noto font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl">
                         Platform with seamless onboarding process
@@ -23,14 +23,14 @@ export const OnboardingProcess = () => {
                     </p>
                 </MotionItem>
 
-                {/* Content Section */}
-                <div className="mt-12 sm:mt-16 lg:mt-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 xl:gap-20 items-center">
+                {/* Content Section - Full width with padding */}
+                <div className=" mt-12 sm:mt-16 lg:mt-20 w-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 xl:gap-20 items-center max-w-[1400px] mx-auto">
                         
                         {/* Left Side - Onboarding Image */}
                         <MotionItem variants={scalePopVariants}>
                             <div className="flex-1 relative flex items-center justify-center order-2 lg:order-1">
-                                <div className="relative w-full aspect-[6/5] sm:aspect-[10/9]">
+                                <div className="relative w-full aspect-[6/5] sm:aspect-[10/9] max-w-[600px] lg:max-w-none">
                                     <div className="relative w-full h-full">
                                         <Image
                                             src="/images/onboarding.svg"
@@ -95,21 +95,21 @@ export const OnboardingProcess = () => {
                                     </svg>
                                 </div>
 
-                                <div className="relative flex justify-center mb-6 sm:mb-8">
+                                <div className="relative flex justify-center mb-6 sm:mb-8 w-full max-w-[500px] lg:max-w-none">
                                     <div
-                                        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180px] h-[180px] sm:w-[200px] sm:h-[200px] lg:w-[250px] lg:h-[250px] rounded-full bg-[#FFB240] z-0 animate-wave"
+                                        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] lg:w-[300px] lg:h-[300px] xl:w-[350px] xl:h-[350px] rounded-full bg-[#FFB240] z-0 animate-wave"
                                     />
 
                                     <Image
                                         src="/images/onboardinghuman.png"
                                         alt="team member"
-                                        width={400}
-                                        height={400}
-                                        className="w-[500px] sm:w-[600px] lg:w-[800px] h-auto relative z-10"
+                                        width={600}
+                                        height={600}
+                                        className="w-full h-auto relative z-10"
                                     />
                                 </div>
 
-                                <div className="absolute bottom-[-15px] sm:bottom-[-20px] w-[90%] sm:w-[85%] z-20">
+                                <div className="absolute bottom-[-15px] sm:bottom-[-20px] w-[90%] sm:w-[85%] max-w-[500px] lg:max-w-[600px] z-20">
                                     <Image
                                         src="/images/onboarding2.svg"
                                         alt="onboarding stats"

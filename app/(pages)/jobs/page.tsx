@@ -3,14 +3,18 @@ import React from 'react'
 import Image from 'next/image'
 import { MotionItem } from '@/components/animations/MotionItems'
 import { partners } from '@/utils/Usedata'
-import { fadeDownVariants, scalePopVariants } from '@/utils/Variants'
+import { fadeDownVariants, fadeInLeftVariants, scalePopVariants } from '@/utils/Variants'
 import { management1, management2 } from '@/utils/Managementdata'
 import { MapPin, Search, Calendar, List, Grid } from "lucide-react";
 import { CurrentOpening } from '@/components/sections/CurrentOpening'
 import { fadeInRightVariants, fadeUpVariants } from "@/utils/Variants";
+import { useRouter } from 'next/navigation'
 
 const Page = () => {
+
+  const router = useRouter()
   return (
+
     <div className='lg:pt-40 pt-28 bg-[#F5F6FA]'>
 
       {/* Hero Section */}
@@ -30,6 +34,7 @@ const Page = () => {
           </p>
 
           <button
+          onClick={() => {router.push("/jobs/job-pool")}}
             className="bg-[#1D8EE6] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:bg-[#1570b8] text-sm sm:text-base transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
           >
             Current Job Openings
@@ -75,6 +80,7 @@ const Page = () => {
       </MotionItem>
 
       {/* Partners Section - Scrolls on mobile, static on desktop */}
+     
       <div className="overflow-hidden lg:overflow-visible relative z-50 w-full bg-white py-12 sm:py-16 lg:py-20 -mt-20 sm:-mt-28 lg:-mt-32">
         {/* Mobile: Scrolling with duplicated items */}
         <div className="flex lg:hidden animate-scroll-left">
@@ -95,7 +101,7 @@ const Page = () => {
         {/* Desktop: Static with original items only */}
         <div className="hidden lg:flex justify-center flex-wrap gap-6 xl:gap-10">
           {partners.map((logo, idx) => (
-            <div key={idx} className="flex items-center gap-2">
+            <div key={idx} className="flex items-center gap-10 justify-center">
               <Image
                 src={logo.logo}
                 alt={logo.name}
@@ -125,8 +131,10 @@ const Page = () => {
           }
         `}</style>
       </div>
+     
 
       {/* Testimonial Section */}
+      <MotionItem variants={fadeInRightVariants} >
       <div className="bg-[#F9FAFB] flex flex-col justify-center items-center text-center py-10 sm:py-12 lg:py-16 gap-4 sm:gap-6 px-4">
         <div className="flex gap-2 items-center">
           <Image src="/icons/sisyphus.svg" alt="sisyphus" width={20} height={20} className="w-5 h-5" />
@@ -145,14 +153,19 @@ const Page = () => {
           <p className="text-[#667085] font-inter text-xs sm:text-sm">Product Manager, Sisyphus</p>
         </div>
       </div>
+      </MotionItem>
 
       {/* Management Features Section */}
+    
       <div className='bg-[#F9FAFB] flex flex-col justify-center items-center text-center py-10 sm:py-12 lg:py-16 gap-6 sm:gap-8 px-4'>
+       <MotionItem variants={fadeUpVariants} >
         <h1 className="font-noto text-xl sm:text-2xl lg:text-4xl font-semibold max-w-3xl text-[#0A2E65] px-4">
           Efficient management of staff through our easy to use features
         </h1>
+        </MotionItem>
 
         {/* Management Row 1 - Scrolls left on mobile, static on desktop */}
+        <MotionItem variants={scalePopVariants} >
         <div className="w-full overflow-hidden lg:overflow-visible relative py-4 sm:py-6 lg:py-8">
           {/* Mobile: Scrolling with duplicated items */}
           <div className="flex lg:hidden animate-scroll-left-management gap-4 sm:gap-6">
@@ -209,8 +222,10 @@ const Page = () => {
             }
           `}</style>
         </div>
+        </MotionItem>
 
         {/* Management Row 2 - Scrolls right on mobile, static on desktop */}
+        <MotionItem variants={fadeUpVariants} >
         <div className="w-full overflow-hidden lg:overflow-visible relative py-4 sm:py-6 lg:py-8">
           {/* Mobile: Scrolling with duplicated items */}
           <div className="flex lg:hidden animate-scroll-right-management gap-4 sm:gap-6">
@@ -232,7 +247,7 @@ const Page = () => {
           {/* Desktop: Static with original items only */}
           <div className="hidden lg:flex justify-center flex-wrap gap-12">
             {management2.map((logo, idx) => (
-              <div key={idx} className="flex items-center gap-3">
+              <div key={idx} className="flex items-center gap-6">
                 <div className='flex flex-col gap-1 text-left whitespace-nowrap'>
                   <span className="text-sm font-medium">{logo.name1}</span>
                   <span className="text-sm font-medium">{logo.name2}</span>
@@ -267,15 +282,19 @@ const Page = () => {
             }
           `}</style>
         </div>
+        </MotionItem>
 
         {/* Job Search Section Header */}
+        <MotionItem variants={fadeInLeftVariants} >
         <div className="mt-4 sm:mt-6 lg:mt-8 px-4">
           <h1 className="font-noto text-xl sm:text-2xl lg:text-4xl font-semibold max-w-3xl text-[#0A2E65]">
             Looking for the next great chapter in your career, Check here
           </h1>
         </div>
+        </MotionItem>
 
         {/* Search Filters */}
+        <MotionItem variants={fadeInRightVariants}>
         <div className='flex flex-col sm:flex-row items-stretch sm:items-center mt-4 sm:mt-6 gap-2 sm:gap-2 w-full max-w-5xl px-4 justify-center'>
           <div className='flex items-center gap-2 border rounded-md w-full sm:flex-1 sm:max-w-[250px] p-3 bg-white shadow-sm hover:shadow-md transition-shadow'>
             <Search className="w-4 h-4 text-[#535768] flex-shrink-0" />
@@ -304,12 +323,14 @@ const Page = () => {
             Search
           </button>
         </div>
+        </MotionItem>
       </div>
 
       {/* Current Openings */}
       <CurrentOpening />
 
       {/* CTA Section */}
+      <MotionItem variants={scalePopVariants}>
       <div className="bg-gray-100 w-full py-8 sm:py-10 lg:py-12 flex flex-col gap-3 sm:gap-4 justify-center items-center px-4">
         <Image src="/images/Avatar group.png" alt="avatar" width={80} height={80} className="w-16 sm:w-20" />
         <p className="text-base sm:text-lg font-medium">Still have questions?</p>
@@ -320,8 +341,10 @@ const Page = () => {
           Get in touch
         </button>
       </div>
+      </MotionItem>
 
       {/* Footer */}
+      <MotionItem variants={fadeInRightVariants} >
       <div className='mt-8 sm:mt-10 flex flex-col justify-center gap-2 sm:gap-3 items-center pb-6 sm:pb-8 px-4'>
         <div className='flex items-center gap-1 flex-wrap justify-center'>
           <p className='text-[#98A2B3] text-xs sm:text-sm'>Powered by</p>
@@ -329,6 +352,8 @@ const Page = () => {
         </div>
         <p className='text-[#98A2B3] text-xs sm:text-sm text-center'>© 2077 Untitled UI. All rights reserved.</p>
       </div>
+      </MotionItem>
+
     </div>
   )
 }

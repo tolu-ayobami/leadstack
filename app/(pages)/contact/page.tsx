@@ -49,7 +49,7 @@ const Page = () => {
     };
 
     try {
-      const response = await fetch("https://formspree.io/f/mgowwgav", {
+      const response = await fetch("https://formspree.io/f/xykgowje", {
         method: "POST",
         headers: {
           "Accept": "application/json",
@@ -75,7 +75,7 @@ const Page = () => {
     <div>
 
       <div className="pt-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl lg:px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10">
+        <div className="container px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10">
 
 
           <MotionItem variants={fadeDownVariants} className="w-full lg:w-[30%] flex flex-col gap-3 lg:gap-4 text-center lg:text-left items-center lg:items-start">

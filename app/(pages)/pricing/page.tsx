@@ -48,7 +48,7 @@ const Page = () => {
                             </h1>
                         </MotionItem>
 
-                        <MotionItem variants={fadeInLeftVariants} className="mt-6 md:mt-8 flex gap-4 justify-center items-center">
+                        <MotionItem variants={fadeInLeftVariants} className="mt-6 md:mt-8 flex-wrap flex gap-4 justify-center items-center">
                             <button
                                 onClick={() => router.push("/demo")}
                                 className="bg-[#1D8EE6] text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-medium hover:bg-[#1570b8] transition-all shadow-lg hover:scale-105"
@@ -69,7 +69,7 @@ const Page = () => {
             </div>
 
             <div className="px-4 py-12">
-                <div className="max-w-7xl px-4 mx-auto">
+                <div className="container px-4 mx-auto">
 
                     <MotionItem variants={fadeUpVariants} className="text-center mb-10">
                         <h1 className="md:leading-[32px] font-noto text-lg sm:text-xl md:text-2xl font-semibold text-[#0D1227]">

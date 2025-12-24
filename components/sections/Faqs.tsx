@@ -39,9 +39,9 @@ export const FAQsSection = () => {
             ...data,
             _subject: "New Faqs Form Submission",
             _replyto: data.email,
-        };
+        };  //"https://formspree.io/f/mgowwgav"
         try {
-            const response = await fetch("https://formspree.io/f/mgowwgav", {
+            const response = await fetch("https://formspree.io/f/xykgowje", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -64,7 +64,7 @@ export const FAQsSection = () => {
 
     return (
         <section className="py-12 md:py-16 lg:py-20 px-4 bg-[#0D1227] ">
-            <div className="lg:w-[80%] w-[90%] mx-auto">
+            <div className="container px-4 mx-auto">
                 <Section>
                     <div className="text-center mb-8 md:mb-12">
                         {/*<h2 className="text-xl md:text-4xl font-bold text-white mb-4">

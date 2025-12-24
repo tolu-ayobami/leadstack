@@ -24,27 +24,37 @@ export default function JobsHeader() {
         return pathname.startsWith(href);
     };
 
+   
+    const [hideHeader, setHideHeader] = useState(false);
+
+
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
+            const heroSectionHeight = window.innerHeight;
+            const scrollPosition = window.scrollY;
+
+            setScrolled(scrollPosition > 50);
+            setHideHeader(scrollPosition > heroSectionHeight);
         };
 
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [])
 
     return (
-        <header className={`fixed top-0 left-0 right-0 z-50 shadow-sm bg-white border-b transition-all duration-300 ${
-            scrolled ? "shadow-md" : ""
+         <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+            scrolled ? "bg-white/85 backdrop-blur-sm shadow-md" : ""
+        } ${
+            hideHeader ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"
         }`}>
             <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
                 {/* Logo */}
                 <Link href="/" className="flex-shrink-0">
                     <Image 
-                        src="/images/jobslogo.png" 
+                        src="/images/Logo.png" 
                         alt="jobs logo" 
-                        height={150} 
-                        width={150} 
+                        height={200} 
+                        width={200} 
                         className="w-[120px] sm:w-[130px] lg:w-[150px] h-auto" 
                     />
                 </Link>
