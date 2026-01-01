@@ -1,22 +1,44 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Search, MapPin, Calendar, ChevronDown, List, X, MoreVertical, Share2, Bookmark, Eye, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
-import { CiGrid41 } from "react-icons/ci";
-import { jobsData } from '@/utils/Usedata';
+import { Search, MapPin, Calendar, ChevronDown, List, X, Globe, MoreVertical, Share2, Bookmark, Eye, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { use } from "react";
+import { jobsData } from '@/utils/Usedata';
+import { number } from 'zod';
+import { CiGrid41 } from "react-icons/ci";
 
-const JobListPage = () => {
 
-  const router = useRouter()
+// Sample company data - replace with your actual data or API call
+const companyData = {
+  id: 1,
+  name: "Leadstack Limited",
+  logo: "/images/Logo.png",
+  location: "Port A, Akinola, Abule-Egba Street, Ojodu, Off GRA, Ikeja, Lagos, Nigeria",
+  website: "www.leadstackhrsystem.com.ng",
+  about: "LeadStack Limited is a leading HR management software company dedicated to providing comprehensive HR solutions to businesses of all sizes. With a team of experienced professionals, we specialize in streamlining HR processes, enhancing workforce productivity, ensuring efficient employee management, and contributing to the overall success of our client organizations.",
+  mission: "Our mission at LeadStack Limited is to empower organizations by providing them with innovative tools. We strive to be a trusted partner, delivering HR solutions that contribute to our clients' growth, employee satisfaction, and organizational excellence.",
+  socialLinks: {
+    twitter: "#",
+    linkedin: "#",
+    facebook: "#",
+    instagram: "#",
+    whatsapp: "#"
+  },
+  totalJobs: 25
+};
+
+const CompanyJobsPage = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = use(params);
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [location, setLocation] = useState('');
-  const [showFilterSidebar, setShowFilterSidebar] = useState(false); // true by default so it's visible on desktop initially
+  const [showFilterSidebar, setShowFilterSidebar] = useState(false);
   const [showDateDropdown, setShowDateDropdown] = useState(false);
   const [showJobMenu, setShowJobMenu] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  //const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedDateRange, setSelectedDateRange] = useState('Date Range');
 
   const [showDateModal, setShowDateModal] = useState(false);
@@ -24,11 +46,11 @@ const JobListPage = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  // Filter states
   const [selectedJobType, setSelectedJobType] = useState<string[]>([]);
   const [selectedExperience, setSelectedExperience] = useState<string[]>([]);
   const [selectedJobStyles, setSelectedJobStyles] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
 
   // Collapsible states for each section
   const [openSections, setOpenSections] = useState({
@@ -48,7 +70,9 @@ const JobListPage = () => {
   const categories = ['Development', 'Designer', 'Marketing', 'Admin'];
   const dateRanges = ['Today', 'Last 7 days', 'Last 30 days', 'Last 3 months', 'Last 6 months', 'Date Range'];
 
-  const filteredJobs = jobsData.filter(job => {
+  const companyJobs = jobsData.filter(job => job.companyId === Number(id));
+
+  const filteredJobs = companyJobs.filter(job => {
     const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.company.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesLocation = !location || job.location.toLowerCase().includes(location.toLowerCase());
@@ -56,6 +80,8 @@ const JobListPage = () => {
     const matchesExperience = selectedExperience.length === 0 || selectedExperience.includes(job.experience);
     return matchesSearch && matchesLocation && matchesJobType && matchesExperience;
   });
+
+  const title = companyJobs[0].company || "Jobs";
 
   const clearAllFilters = () => {
     setSelectedJobType([]);
@@ -72,13 +98,14 @@ const JobListPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F5F7FA]">
-      {/* Hero Section */}
+      {/* Header with Back Button and Search */}
       <div className="bg-white shadow-sm">
         <div className="container mx-auto  flex-shrink-0 px-4 h-auto lg:px-20 pt-28 pb-8">
-          <div className="text-center max-w-4xl mx-auto mb-8">
-            <h1 className="text-3xl text-[#0A2E65] sm:text-4xl lg:text-5xl font-bold mb-8">
-              Looking for the next great chapter<br />in your career
-            </h1>
+          <div className="bg-white py-8">
+            <div className=" mx-auto px-4 lg:px-20 text-center">
+              <h1 className="text-4xl font-bold text-gray-900 mb-2">{title}</h1>
+              <p className="text-xl text-gray-600">{companyJobs.length} jobs currently open</p>
+            </div>
           </div>
           <div className="flex flex-col lg:flex-row flex-wrap gap-3 items-stretch ">
             <div className="flex-1 flex items-center gap-3 bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
@@ -173,7 +200,7 @@ const JobListPage = () => {
             <button className="w-fit  bg-[#1D8EE6] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#1570b8] transition-colors text-sm whitespace-nowrap shadow-lg">
               Search
             </button>
-            <div className="w-fit max-lg:hidden flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
+           {/* <div className="w-fit max-lg:hidden flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
               <button
                 onClick={() => setViewMode('grid')}
                 className={`p-2.5 rounded-md transition-all ${viewMode === 'grid' ? 'bg-[#1D8EE6] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
@@ -188,7 +215,7 @@ const JobListPage = () => {
               >
                 <List className="w-5 h-5" />
               </button>
-            </div>
+            </div>*/}
             {/* Filter Toggle Button - Works on both mobile and desktop */}
             <button
               onClick={() => setShowFilterSidebar(!showFilterSidebar)}
@@ -208,252 +235,265 @@ const JobListPage = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 lg:px-20 py-8">
-        <div className={`flex  gap-6 items-start transition-all duration-300 ${showFilterSidebar ? 'lg:pr-0' : ''}`}>
-          <div className='container'>
-            <main className={`flex-1 min-w-0 ${!showFilterSidebar ? 'container ' : ''}`}>
-              <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 gap-5' : 'flex flex-col gap-4'}>
-                {filteredJobs.map((job) => (
-                  <div
-                    key={job.id}
-                    className="w-full flex flex-col max-xl:flex-wrap sm:flex-row items-start sm:items-center gap-4 sm:gap-8 bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 h-full"
-                  >
-                    {/* Image */}
-                    <div className="hidden lg:flex w-fit shrink-0">
-                      <Image
-                        src={job.picture}
-                        alt={job.course}
-                        width={80}
-                        height={80}
-                        className="object-contain"
-                      />
-                    </div>
+        <div className="flex flex-col-reverse lg:flex-row gap-6 items-start">
+          {/* Job Listings - Left Side */}
+          <main className=" w-full">
+            <div className="flex flex-col gap-4">
+              {filteredJobs.map((job) => (
+                <div
+                  key={job.id}
+                  className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 bg-white p-4 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg hover:border-[#1D8EE6] transition-all duration-300"
+                >
+                  {/* Image */}
+                  <div className="hidden lg:flex w-fit shrink-0">
+                    <Image
+                      src={job.picture || "/images/Logo.png"}
+                      alt={job.title}
+                      width={80}
+                      height={80}
+                      className="object-contain"
+                    />
+                  </div>
 
-                    {/* Content */}
-                    <div className="flex flex-col gap-3 w-full min-w-0">
-                      {/* Title + menu */}
-                      <div className="flex justify-between items-start gap-2">
-                        <div className="min-w-0">
-                          <h3 className="font-bold text-gray-900 text-base sm:text-lg ">
-                            {job.title}
-                          </h3>
-                          <div className='flex items-center gap-4 mt-1'>
-
-                            <Link href={`/jobs/job-pool/company/${job.companyId}`}>
-                              <p className="text-gray-500 text-xs cursor-pointer hover:underline truncate ">
-                                {job.company}
-                              </p>
-                            </Link>
-
-                            <div className='w-0.5 h-5 bg-gray-200' />
-
-                            <p className="text-gray-500 text-xs truncate ">
-                              {job.location}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="relative shrink-0">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setShowJobMenu(showJobMenu === job.id ? null : job.id);
-                            }}
-                            className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors"
-                          >
-                            <MoreVertical className="w-5 h-5" />
-                          </button>
-
-                          {showJobMenu === job.id && (
-                            <>
-                              <div
-                                className="fixed inset-0 z-40"
-                                onClick={() => setShowJobMenu(null)}
-                              />
-                              <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50 py-2">
-                                <button className="w-full text-left px-4 py-2.5 hover:bg-gray-50 text-sm flex items-center gap-3">
-                                  <Share2 className="w-4 h-4" /> Share
-                                </button>
-                                <button className="w-full text-left px-4 py-2.5 hover:bg-gray-50 text-sm flex items-center gap-3">
-                                  <Bookmark className="w-4 h-4" /> Save
-                                </button>
-                                <Link href={`/jobs/job-pool/${job.id}`}>
-                                  <button className="w-full text-left px-4 py-2.5 hover:bg-gray-50 text-sm flex items-center gap-3">
-                                    <Eye className="w-4 h-4" /> View Details
-                                  </button>
-                                </Link>
-                              </div>
-                            </>
-                          )}
+                  {/* Content */}
+                  <div className="flex flex-col gap-3 w-full min-w-0">
+                    {/* Title + menu */}
+                    <div className="flex justify-between items-start gap-2">
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-gray-900 text-base sm:text-lg">
+                          {job.title}
+                        </h3>
+                        <div className='flex items-center gap-4 mt-1'>
+                          <p className="text-gray-500 text-xs">{job.company}</p>
+                          <div className='w-0.5 h-5 bg-gray-200' />
+                          <p className="text-gray-500 text-xs truncate">{job.location}</p>
                         </div>
                       </div>
 
-                      {/* Meta info */}
-                      <div className="space-y-2 text-gray-600 text-sm">
-                        <div className="flex gap-3">
-                          <div className="flex items-center gap-2 min-w-0">
-                            <Image src="/icons/year.svg" alt="year" width={18} height={18} />
-                            <span className=" text-xs truncate ">{job.experience}</span>
-                          </div>
+                      {/* Three Dots Menu */}
+                      <div className="relative shrink-0">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setShowJobMenu(showJobMenu === job.id ? null : job.id);
+                          }}
+                          className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors"
+                        >
+                          <MoreVertical className="w-5 h-5" />
+                        </button>
 
-                          <div className="flex items-center gap-2 min-w-0">
-                            <Image src="/icons/course.svg" alt="course" width={18} height={18} />
-                            <span className="text-xs truncate">{job.course}</span>
-                          </div>
-                        </div>
+                        {showJobMenu === job.id && (
+                          <>
+                            <div
+                              className="fixed inset-0 z-40"
+                              onClick={() => setShowJobMenu(null)}
+                            />
+                            <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50 py-2">
+                              <button className="w-full text-left px-4 py-2.5 hover:bg-gray-50 text-sm flex items-center gap-3">
+                                <Share2 className="w-4 h-4" /> Share
+                              </button>
+                              <button className="w-full text-left px-4 py-2.5 hover:bg-gray-50 text-sm flex items-center gap-3">
+                                <Bookmark className="w-4 h-4" /> Save
+                              </button>
+                              <Link href={`/jobs/job-pool/${job.id}`}>
+                                <button className="w-full text-left px-4 py-2.5 hover:bg-gray-50 text-sm flex items-center gap-3">
+                                  <Eye className="w-4 h-4" /> View Details
+                                </button>
+                              </Link>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
 
-                        <div className="flex flex-wrap gap-3">
-                          <div className="flex items-center gap-2">
-                            <Image src="/icons/time.svg" alt="salary" width={18} height={18} />
-                            <span className='text-xs'>{job.salary}</span>
-                          </div>
-
-                          <div className="flex items-center gap-2">
-                            <Image src="/icons/time.svg" alt="type" width={18} height={18} />
-                            <span className='text-xs'>{job.type}</span>
-                          </div>
-                        </div>
-                        <hr />
-
+                    {/* Meta info */}
+                    <div className="space-y-2 text-gray-600 text-sm">
+                      <div className="flex gap-3">
                         <div className="flex items-center gap-2">
-                          <Image src="/icons/Timecircle.svg" alt="timecircle" width={18} height={18} />
-                          <span className='text-xs'>Posted {job.postedDays} days ago</span>
+                          <Image src="/icons/year.svg" alt="year" width={18} height={18} />
+                          <span className="text-xs">{job.experience}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Image src="/icons/course.svg" alt="course" width={18} height={18} />
+                          <span className="text-xs">{job.course}</span>
                         </div>
                       </div>
-                    </div>
-                  </div>
 
-                ))}
-                {/*<div key={job.id} className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-lg hover:border-[#1D8EE6] transition-all duration-300 p-5 cursor-pointer group">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-start gap-4">
-                      <div className="w-14 h-14 bg-gradient-to-br from-pink-400 via-purple-400 to-purple-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
-                        <span className="text-white font-bold text-xl">LS</span>
+                      <div className="flex flex-wrap gap-3">
+                        <div className="flex items-center gap-2">
+                          <Image src="/icons/time.svg" alt="salary" width={18} height={18} />
+                          <span className='text-xs'>{job.salary}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Image src="/icons/time.svg" alt="type" width={18} height={18} />
+                          <span className='text-xs'>{job.type}</span>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-bold text-gray-900 text-lg group-hover:text-[#1D8EE6] transition-colors">{job.title}</h3>
-                        <p className="text-gray-500 text-sm mt-0.5">{job.company}</p>
+
+                      <hr />
+
+                      <div className="flex items-center gap-2">
+                        <Image src="/icons/Timecircle.svg" alt="timecircle" width={18} height={18} />
+                        <span className='text-xs'>Posted {job.postedDays} days ago</span>
                       </div>
                     </div>
-                    <div className="relative">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setShowJobMenu(showJobMenu === job.id ? null : job.id);
-                        }}
-                        className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors"
-                      >
-                        <MoreVertical className="w-5 h-5" />
-                      </button>
-                      {showJobMenu === job.id && (
-                        <>
-                          <div className="fixed inset-0 z-40" onClick={() => setShowJobMenu(null)} />
-                          <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50 py-2">
-                            <button className="w-full text-left px-4 py-2.5 hover:bg-gray-50 text-sm text-gray-700 hover:text-[#1D8EE6] transition-colors flex items-center gap-3">
-                              <Share2 className="w-4 h-4" /> <span>Share</span>
-                            </button>
-                            <button className="w-full text-left px-4 py-2.5 hover:bg-gray-50 text-sm text-gray-700 hover:text-[#1D8EE6] transition-colors flex items-center gap-3">
-                              <Bookmark className="w-4 h-4" /> <span>Save</span>
-                            </button>
-                            <Link href={`/jobs/job-pool/${job.id}`}>
-                            <button  className="w-full text-left px-4 py-2.5 hover:bg-gray-50 text-sm text-gray-700 hover:text-[#1D8EE6] transition-colors flex items-center gap-3">
-                              <Eye className="w-4 h-4" /> <span>View Details</span>
-                            </button>
-                            </Link>
-                          </div>
-                        </>
-                      )}
-                    </div>
                   </div>
-                  <div className="space-y-2.5 mb-4">
-                    <div className="flex items-center gap-2 text-gray-600 text-sm">
-                      <Briefcase className="w-4 h-4 text-[#1D8EE6]" />
-                      <span>{job.experience}</span>
-                      <span className="text-gray-400">•</span>
-                      <span className="text-xs px-2 py-1 bg-blue-50 text-[#1D8EE6] rounded font-medium">{job.type}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600 text-sm">
-                      <MapPin className="w-4 h-4 text-[#1D8EE6]" />
-                      <span>{job.location}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600 text-sm">
-                      <DollarSign className="w-4 h-4 text-[#1D8EE6]" />
-                      <span className="font-semibold text-gray-900">{job.salary}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                    <span className="text-xs text-gray-500 flex items-center gap-1.5">
-                      <Clock className="w-4 h-4" />
-                      Posted {job.postedDays} days ago
-                    </span>
-                  </div>
-                </div> */}
-
-              </div>
-
-              {filteredJobs.length === 0 && (
-                <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
-                  <div className="text-gray-400 mb-4">
-                    <Search className="w-16 h-16 mx-auto" />
-                  </div>
-                  <p className="text-gray-600 text-lg font-semibold mb-2">No jobs found</p>
-                  <p className="text-gray-500 text-sm mb-4">Try adjusting your filters or search criteria</p>
-                  <button onClick={clearAllFilters} className="text-[#1D8EE6] hover:text-[#1570b8] font-semibold">
-                    Clear all filters
-                  </button>
                 </div>
-              )}
-            </main>
+              ))}
+            </div>
 
+            {/* No Results */}
+            {filteredJobs.length === 0 && (
+              <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
+                <div className="text-gray-400 mb-4">
+                  <Search className="w-16 h-16 mx-auto" />
+                </div>
+                <p className="text-gray-600 text-lg font-semibold mb-2">No jobs found for this company</p>
+                <p className="text-gray-500 text-sm mb-4">
+                  Company ID: {id}<br />
+                  Please check if this company has any job listings.
+                </p>
+                <button
+                  onClick={() => router.push('/jobs/job-pool')}
+                  className="text-[#1D8EE6] hover:text-[#1570b8] font-semibold"
+                >
+                  View all jobs
+                </button>
+              </div>
+            )}
 
             {/* Pagination */}
             {filteredJobs.length > 0 && (
-              <div className=" container mt-12 flex flex-col sm:flex-row justify-between items-center max-sm:justify-center  gap-4">
+              <div className="mt-8 flex flex-col lg:flex-row  gap-3 lg:justify-between  items-center">
                 <p className="text-gray-500 text-sm">
-                  1-{filteredJobs.length} of 25
+                  1-{filteredJobs.length} of {companyJobs.length}
                 </p>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
-                    className="p-2 rounded-lg  disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                    className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
-                  {[1, 2, 3, 4, 5].map((page) => (
+                  {[1, 2, 3].map((page) => (
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`w-10 h-10 rounded-lg font-semibold transition-all ${currentPage === page ? 'bg-[#1D8EE6] text-white shadow-md' : ' text-gray-600 hover:bg-gray-100 '}`}
+                      className={`w-10 h-10 rounded-lg font-semibold transition-all ${currentPage === page
+                        ? 'bg-[#1D8EE6] text-white shadow-md'
+                        : 'text-gray-600 hover:bg-gray-100'
+                        }`}
                     >
                       {page}
                     </button>
                   ))}
                   <button
                     onClick={() => setCurrentPage(prev => prev + 1)}
-                    disabled={currentPage >= 5}
-                    className="p-2 rounded-lg  disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                    disabled={currentPage >= 3}
+                    className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
                   >
                     <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
               </div>
             )}
+          </main>
 
+          {/* Company Information Sidebar - Right Side */}
+          <aside className=" w-full">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
 
-          </div>
+              <h4 className="font-semibold text-[#7C8091] mb-2">Company's Information</h4>
+
+              <div className="flex flex-col mt-6">
+                <Image src={companyData.logo} alt={companyData.name} width={150} height={150} className="object-contain mb-4" />
+                <h3 className="font-bold text-gray-900 text-lg ">{companyData.name}</h3>
+              </div>
+
+              {/* Company Info Section */}
+              <div className="space-y-6">
+                <div className='mt-6'>
+                  <hr />
+                  <p className="text-sm mt-5 text-gray-600 leading-relaxed">
+                    {companyData.about}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Mission</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {companyData.mission}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Location</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {companyData.location}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Website</h4>
+                  <a
+                    href={`https://${companyData.website}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-[#1D8EE6] hover:underline flex items-center gap-2"
+                  >
+                    <Globe className="w-4 h-4" />
+                    {companyData.website}
+                  </a>
+                </div>
+
+                {/* Social Media Links */}
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-3">Social media handles</h4>
+                  <div className="max-w-sm flex items-center justify-between  gap-4">
+                    <a href={companyData.socialLinks.twitter} target="_blank" rel="noopener noreferrer">
+                      <Image src="/icons/twi.svg" alt="Twitter" width={40} height={40}
+                        className="bg-[#CAE1F6] p-2 rounded-full hover:scale-110 transition" />
+                    </a>
+
+                    <a href={companyData.socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
+                      <Image src="/icons/linkdn.svg" alt="LinkedIn" width={40} height={40}
+                        className="bg-[#CAE1F6] p-2 rounded-full hover:scale-110 transition" />
+                    </a>
+
+                    <a href={companyData.socialLinks.whatsapp} target="_blank" rel="noopener noreferrer">
+                      <Image src="/icons/whatsapp.svg" alt="WhatsApp" width={40} height={40}
+                        className="bg-[#CAE1F6] p-2 rounded-full hover:scale-110 transition" />
+                    </a>
+
+                    <a href={companyData.socialLinks.facebook} target="_blank" rel="noopener noreferrer">
+                      <Image src="/icons/fb.svg" alt="Facebook" width={40} height={40}
+                        className="bg-[#CAE1F6] p-2 rounded-full hover:scale-110 transition" />
+                    </a>
+
+                    <a href={companyData.socialLinks.whatsapp} target="_blank" rel="noopener noreferrer">
+                      <Image src="/icons/tg.svg" alt="Telegram" width={40} height={40}
+                        className="bg-[#CAE1F6] p-2 rounded-full hover:scale-110 transition" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
           {showFilterSidebar && (
             <>
               {/* FILTER CONTAINER */}
               <aside
                 className="
         fixed inset-0 lg:z-40 z-50 flex items-center justify-center
-        lg:static lg:inset-auto lg:block lg:w-80
+        lg:static lg:inset-auto lg:block 
       "
               >
                 {/* FILTER CARD */}
                 <div
                   className="
-          max-sm:w-[90%] w-full max-w-sm bg-white shadow-2xl
+          max-sm:w-[90%] lg:w-60 bg-white shadow-2xl
            lg:shadow-sm lg:h-auto
           max-sm:max-h-[90vh] overflow-y-auto
         "
@@ -611,13 +651,10 @@ const JobListPage = () => {
               />
             </>
           )}
-
         </div>
-
-
       </div>
-    </div >
+    </div>
   );
 };
 
-export default JobListPage;
+export default CompanyJobsPage;

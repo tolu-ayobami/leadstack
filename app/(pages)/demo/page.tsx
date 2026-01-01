@@ -7,9 +7,7 @@ import * as z from "zod";
 import LogoCarousel from "@/components/sections/PartnersCarousel";
 import { countries } from "@/utils/CountriesData";
 import { toast } from "react-toastify";
-import { fadeInRightVariants } from "@/utils/Variants";
-import { Reveal } from '@/components/animations/Reavel';
-import { MotionItem } from '@/components/animations/MotionItems';
+
 import Link from "next/link";
 
 const contactSchema = z.object({
@@ -72,8 +70,9 @@ const Page = () => {
 
     return (
         <div>
-            <div className="pt-28">
-                <div className="container px-4 sm:px-6 lg:px-8 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10">
+
+            <div className="pt-28 px-4 sm:px-6 lg:px-8">
+                <div className="container px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10">
 
                     <div className="w-full lg:w-[30%] flex flex-col gap-3 lg:gap-4 text-center lg:text-left items-center lg:items-start">
                         <h1 className="font-semibold font-noto text-2xl sm:text-3xl md:text-4xl">
@@ -298,7 +297,7 @@ const Page = () => {
                                         className="text-sm text-[#7C8091] font-poppins leading-tight cursor-pointer"
                                     >
                                         By clicking continue, you accept the{" "}
-                                       <Link href="https://leadstack.co/terms-of-use"> <span className="text-[#1D8EE6] hover:underline">Terms of Service</span> and{" "}</Link>
+                                        <Link href="https://leadstack.co/terms-of-use"> <span className="text-[#1D8EE6] hover:underline">Terms of Service</span> and{" "}</Link>
                                         <Link href="https://leadstack.co/privacy-policy"><span className="text-[#1D8EE6] hover:underline">Privacy Policy of Leadstack</span></Link>
                                     </label>
                                 </div>

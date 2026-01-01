@@ -9,6 +9,7 @@ import { fadeDownVariants, fadeInLeftVariants, fadeInRightVariants, fadeUpVarian
 import { Reveal } from '@/components/animations/Reavel';
 import { MotionItem } from '@/components/animations/MotionItems';
 import { motion } from 'framer-motion';
+import { Link } from 'lucide-react';
 
 const Page = () => {
     const router = useRouter()
@@ -113,12 +114,15 @@ const Page = () => {
                                             {item.description}
                                         </p>
                                     </div>
+                                 
                                     <button
                                         type="button"
+                                        onClick={() => router.push("https://leadhr.app/register")}
                                         className="w-full mt-4 bg-[#1D8EE6] text-white py-3 rounded-lg font-medium hover:bg-[#1678c2] transition"
                                     >
                                         Subscribe
                                     </button>
+                                  
 
                                     <div className="bg-white rounded-xl p-5 mt-4 shadow-md">
                                         <ul className="flex flex-col gap-3">

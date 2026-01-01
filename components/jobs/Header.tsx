@@ -52,13 +52,12 @@ export default function JobsHeader() {
                 <Link href="/" className="flex-shrink-0">
                     <Image 
                         src="/images/Logo.png" 
-                        alt="jobs logo" 
+                        alt="logo" 
                         height={200} 
                         width={200} 
-                        className="w-[120px] sm:w-[130px] lg:w-[150px] h-auto" 
+                        className="w-[120px] sm:w-[150px] md:w-[180px] lg:w-[200px] h-auto" 
                     />
                 </Link>
-
                 {/* Desktop Navigation */}
                 <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
                     {job.map((item) => (
@@ -80,14 +79,14 @@ export default function JobsHeader() {
                 {/* Desktop Auth Buttons */}
                 <div className="hidden lg:flex gap-2 xl:gap-3 items-center flex-shrink-0">
                     <Link
-                        href="/"
+                        href="/jobs/get-started"
                         className="rounded-md bg-white border border-[#1D8EE6] px-3 xl:px-4 py-2 text-sm font-medium text-[#1D8EE6] hover:bg-[#1D8EE6] hover:text-white transition-colors"
                     >
                         Signup
                     </Link>
 
                     <Link
-                        href="/"
+                        href="/jobs/login"
                         className="rounded-md bg-[#1D8EE6] px-3 xl:px-4 py-2 text-sm font-medium text-white hover:bg-[#1570b8] transition-colors"
                     >
                         Login
@@ -111,7 +110,7 @@ export default function JobsHeader() {
                         {/* Mobile Auth Buttons - Top */}
                         <div className="flex gap-3 items-center justify-center pb-6 border-b border-gray-100">
                             <Link
-                                href="/"
+                                href="/jobs/get-started"
                                 className="rounded-md flex-1 text-center bg-white border border-[#1D8EE6] px-4 py-2.5 text-sm font-medium text-[#1D8EE6] hover:bg-[#1D8EE6] hover:text-white transition-colors"
                                 onClick={() => setMobileOpen(false)}
                             >
@@ -119,7 +118,7 @@ export default function JobsHeader() {
                             </Link>
 
                             <Link
-                                href="/"
+                                href="/jobs/login"
                                 className="rounded-md flex-1 text-center bg-[#1D8EE6] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#1570b8] transition-colors"
                                 onClick={() => setMobileOpen(false)}
                             >

@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Inter, Poppins, Noto_Sans, } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import ToastProvider from "@/components/Toastcontainer";
 import ScrollToTop from "@/components/ScrollTop";
 import WhatsAppButton from "@/components/Whatsappbtn";

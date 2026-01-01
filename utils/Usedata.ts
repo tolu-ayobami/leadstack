@@ -1,3 +1,5 @@
+import { title } from "process";
+
 export const partners = [
   {
     id: 1,
@@ -267,14 +269,14 @@ export const client = [
   {
     id: 3,
     picture: "/images/third.png",
-    name: "Steven Ogbaisi",
+    name: "Steven Stella",
     title: "HR Director, Global Corp",
     text: "Implementing LeadStack HR has been a game-changer for our company. The platform is intuitive and has saved us countless hours."
   },
   {
     id: 4,
-    picture: "/images/first.png",
-    name: "Anthony Adeyemi",
+    picture: "/images/customer.png",
+    name: "Anthony Esther",
     title: "Principal, Sacred Heart College",
     text: "Leadstack EDU made our work easier. It's intuitive, reliable, and has given our staff more time to focus on what matters most — teaching."
   },
@@ -548,68 +550,92 @@ export const pricing = [
 export const jobsData = [
   {
     id: 1,
+    companyId: 1,
     title: "Full Stack Developer",
-    company: "LeadstackHR",
+    company: "Leadstack",
     location: "Lagos, Nigeria",
     type: "Full Time",
     salary: "₦800k - ₦1.2m",
+    course: "Html, Python, CSS",
+    picture: "/images/jobpics.png",
     experience: "3-5 Years",
     postedDays: 2,
-    logo: "/images/Logo.png"
+    logo: "/images/Logo.png",
+    status:"success"
   },
   {
     id: 2,
-    title: "Full Stack Developer",
-    company: "LeadstackHR",
+    companyId: 2,
+    title: "Front-end Developer",
+    company: "Leads",
     location: "Remote",
     type: "Full Time",
     salary: "₦600k - ₦900k",
+    course: "Html, Python, CSS",
+    picture: "/images/jobpics.png",
     experience: "2-4 Years",
     postedDays: 5,
-    logo: "/images/Logo.png"
+    logo: "/images/Logo.png",
+      status:"success"
   },
   {
     id: 3,
+    companyId: 3,
     title: "Full Stack Developer",
-    company: "LeadstackHR",
+    company: "Payroll",
     location: "Abuja, Nigeria",
     type: "Contract",
     salary: "₦700k - ₦1m",
+    course: "Html, Python, CSS",
+    picture: "/images/jobpics.png",
     experience: "4-6 Years",
     postedDays: 7,
-    logo: "/images/Logo.png"
+    logo: "/images/Logo.png",
+      status:"success"
   },
   {
     id: 4,
+    companyId: 4,
     title: "Full Stack Developer",
-    company: "LeadstackHR",
+    company: "Attendance",
     location: "P.H, Nigeria",
     type: "Full Time",
     salary: "₦500k - ₦800k",
+    course: "Html, Python, CSS",
+    picture: "/images/jobpics.png",
     experience: "2-3 Years",
     postedDays: 10,
-    logo: "/images/Logo.png"
+    logo: "/images/Logo.png",
+      status:"success"
   },
   {
     id: 5,
+    companyId: 5,
     title: "Front-end Developer",
     company: "LeadstackHR",
     location: "Lagos, Nigeria",
     type: "Part Time",
     salary: "₦400k - ₦600k",
+    course: "Html, CSS, javascript, Reactjs",
+    picture: "/images/jobpics.png",
     experience: "1-2 Years",
     postedDays: 14,
-    logo: "/images/Logo.png"
+    logo: "/images/Logo.png",
+      status:"success"
   },
   {
     id: 6,
+    companyId: 1,
     title: "Backend Developer",
-    company: "LeadstackHR",
+    company: "Leadstack",
     location: "Remote",
     type: "Full Time",
     salary: "₦900k - ₦1.5m",
+    course: "Nodejs, Python, javascript",
+    picture: "/images/jobpics.png",
     experience: "5+ Years",
     postedDays: 20,
-    logo: "/images/Logo.png"
+    logo: "/images/Logo.png",
+      status:"success"
   },
 ];

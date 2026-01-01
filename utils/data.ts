@@ -25,7 +25,7 @@ export const navItems: NavItem[] = [
     href: "/jobs", 
     dropdown: [
       { label: "Find Jobs", href: "/jobs/job-pool" },
-      { label: "Post a Job", href: "/jobs/post" },
+      { label: "Post a Job", href: "https://leadhr.app/register" },
     ],
   },
   {

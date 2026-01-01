@@ -77,7 +77,6 @@ const Page = () => {
       <div className="pt-28 px-4 sm:px-6 lg:px-8">
         <div className="container px-4 mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10">
 
-
           <MotionItem variants={fadeDownVariants} className="w-full lg:w-[30%] flex flex-col gap-3 lg:gap-4 text-center lg:text-left items-center lg:items-start">
             <h1 className="font-semibold font-noto text-2xl sm:text-3xl md:text-4xl">
               Get in touch with us

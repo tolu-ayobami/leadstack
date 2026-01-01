@@ -155,7 +155,7 @@ const Footer = () => {
 
                     <Reveal>
                         <p className='font-noto pb-6 sm:pb-8 lg:pb-10 text-xs sm:text-sm text-center font-medium text-[#656567]'>
-                            © 2025 Leadstackhr. All rights reserved.
+                            © {new Date().getFullYear()} Leadstackhr. All rights reserved.
                         </p>
                     </Reveal>
                 </div>
